@@ -13,7 +13,7 @@ class WeibocnSpider(Spider):
     follow_url = 'https://m.weibo.cn/api/container/getIndex?containerid=231051_-_followers_-_{uid}&page={page}'
     fan_url = 'https://m.weibo.cn/api/container/getIndex?containerid=231051_-_fans_-_{uid}&page={page}'
     weibo_url = 'https://m.weibo.cn/api/container/getIndex?uid={uid}&type=uid&page={page}&containerid=107603{uid}'
-    start_users = ['3217179555', '1742566624', '2282991915', '1288739185', '3952070245', '5878659096']
+    start_users = ['3217179555', '1742566624', '2282991915', '1288739185', '3952070245', '3655689037','5878659096']
 
     def start_requests(self):
         for uid in self.start_users:
@@ -38,18 +38,18 @@ class WeibocnSpider(Spider):
             }
             for field, attr in field_map.items():
                 user_item[field] = user_info.get(attr)
-            self.logger.debug(user_item)
+            # self.logger.debug(user_item)
             yield user_item
             # 关注
-            uid = user_info.get('id')
-            yield Request(self.follow_url.format(uid=uid, page=1), callback=self.parse_follows,
-                          meta={'page': 1, 'uid': uid})
-            # 粉丝
-            yield Request(self.fan_url.format(uid=uid, page=1), callback=self.parse_fans,
-                          meta={'page': 1, 'uid': uid})
+            # uid = user_info.get('id')
+            # yield Request(self.follow_url.format(uid=uid, page=1), callback=self.parse_follows,
+            #               meta={'page': 1, 'uid': uid})
+            # # 粉丝
+            # yield Request(self.fan_url.format(uid=uid, page=1), callback=self.parse_fans,
+            #               meta={'page': 1, 'uid': uid})
             # 微博
-            yield Request(self.weibo_url.format(uid=uid, page=1), callback=self.parse_weibos,
-                          meta={'page': 1, 'uid': uid})
+            # yield Request(self.weibo_url.format(uid=uid, page=1), callback=self.parse_weibos,
+            #               meta={'page': 1, 'uid': uid})
 
     def parse_follows(self, response):
         """
@@ -115,6 +115,7 @@ class WeibocnSpider(Spider):
         解析微博列表
         :param response: Response对象
         """
+        self.logger.debug("内容解析"*10)
         result = json.loads(response.text)
         if result.get('ok') and result.get('data').get('cards'):
             weibos = result.get('data').get('cards')
@@ -133,7 +134,7 @@ class WeibocnSpider(Spider):
                     weibo_item['user'] = response.meta.get('uid')
                     yield weibo_item
             # 下一页微博
-            uid = response.meta.get('uid')
-            page = response.meta.get('page') + 1
-            yield Request(self.weibo_url.format(uid=uid, page=page), callback=self.parse_weibos,
-                          meta={'uid': uid, 'page': page})
+            # uid = response.meta.get('uid')
+            # page = response.meta.get('page') + 1
+            # yield Request(self.weibo_url.format(uid=uid, page=page), callback=self.parse_weibos,
+            #               meta={'uid': uid, 'page': page})

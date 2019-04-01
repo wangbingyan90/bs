@@ -14,6 +14,14 @@ BOT_NAME = 'new'
 SPIDER_MODULES = ['new.spiders']
 NEWSPIDER_MODULE = 'new.spiders'
 
+# db
+SQLITE_DATABASE = 'new' 
+SQLITE_TABLE = '''CREATE TABLE IF NOT EXISTS COMPANY
+            (ID INT PRIMARY KEY     NOT NULL,
+            NAME           TEXT    NOT NULL,
+            AGE            INT     NOT NULL,
+            ADDRESS        CHAR(50),
+            SALARY         REAL);'''
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'new (+http://www.yourdomain.com)'
@@ -64,9 +72,9 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
+# ITEM_PIPELINES = {
 #    'new.pipelines.NewPipeline': 300,
-#}
+# }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
