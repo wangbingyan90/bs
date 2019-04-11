@@ -36,9 +36,11 @@ class NewPipeline(object):
         self.conn.close()
 
     def process_item(self, item, spider):
+        if isinstance(item, WeiboItem):
+            print("管道数据"*10)
+            pass
         # self.logger.debug("管道数据")
         # self.logger.debug(item)
-        print("管道数据"*10)
         return item
 
 class SqlitePipeline(object):

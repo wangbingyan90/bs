@@ -48,3 +48,25 @@ class WeiboItem(Item):
     user = Field()
     created_at = Field()
     crawled_at = Field()
+
+class NewsItem(Item):
+    collection = 'New'
+    id = Field()        #id
+    title = Field()      #标题
+    summary = Field()   #摘要
+    published = Field()  #发布时间
+    content = Field()    #正文
+    news_url = Field()   #url
+    crawl_date = Field() #爬从抓取的时间
+    referer_web = Field()#引用的网站名
+    referer_url = Field()#引用的源url
+    author = Field()     #作者
+    read_num = Field()   #已阅读量
+    comment_num =Field() #已评论量
+    pic = Field()        #新闻图片
+    news_no = Field()    #所在网站新闻标号
+    topic = Field()      #所在网站所属主题
+    catalogue = Field()  #所在网站所属目录
+    tags = Field()       #标签
+    keywords = Field()   #找到对应的关键词
+    source = Field()     #来源网站(网易科技)

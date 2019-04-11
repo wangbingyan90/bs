@@ -1,0 +1,61 @@
+1. 检查安装情况
+
+        查看有没有安装过：
+        yum list installed MySQL* （有存在要卸载yum remove MySQL*）
+        rpm -qa | grep mysql*
+
+        查看有没有安装包：
+        yum list mysql*
+
+2. 安装 MySQL
+
+        安装 MySQL 客户端：
+        yum -y install mysql
+
+        安装 MySQL 服务器端：
+        yum -y install mysql-server  mysql-devel
+
+3、编辑my.cnf文件
+    
+    命令：vi /etc/my,cnf
+    在[client ]下面加入
+    default-character-set=utf8
+    在[ mysqld ] 下面加
+    character_set_server=utf8
+
+    启动 MySQL 服务： 
+        service mysqld start或者/etc/init.d/mysqld start
+
+    设置开机启动：
+        添加开机启动：chkconfig --add mysqld;
+        开机启动：chkconfig mysqld on;
+        查看开机启动设置是否成功chkconfig --list | grep mysql* mysqld 0:关闭 1:关闭 2:启用 3:启用 4:启用 5:启用 6:关闭停止：
+
+    停止 MySQL 服务： 
+        service mysqld stop
+
+4.  MySQL 登陆等权限设置
+
+        登录 MySQL 数据库：
+        mysq -u root password 123456
+
+        首次使用创建root管理员和密码：
+        （mysql -u root -p输入密码即可？）
+        mysql -u root;
+        use mysql ;
+        update user set password=password("123456") where user="root";
+        flush privileges;
+
+        忘记密码：
+        service mysqld stop;
+        mysqld_safe --user=root --skip-grant-tables;
+        这一步骤执行的时候不会出现新的命令行，你需要重新打开一个窗口执行下面的命令
+        mysql -u root;
+        use mysql ;
+        update user set password=password("123456") where user="root";
+        flush privileges;
+
+        如果需要外网可以访问需要再做如下设置：
+        授权用户可以从远程登陆
+        grant all PRIVILEGES on *.* to root@'%'  identified by '123456';
+        flush privileges ;
