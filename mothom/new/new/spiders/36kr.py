@@ -2,6 +2,7 @@
 from scrapy import Request, Spider
 import datetime
 import json
+import time
 
 class _36krSpider(Spider):
     name = '36kr'
@@ -23,6 +24,8 @@ class _36krSpider(Spider):
         if result.get('data').get('items'):
             items = result.get('data').get('items')
             for item in items:
+                time.sleep(1)
+                print(item)
                 yield Request(self.content_url.format(id=item.get('id')), callback=self.parse_content)
 
 

@@ -59,3 +59,16 @@
         授权用户可以从远程登陆
         grant all PRIVILEGES on *.* to root@'%'  identified by '123456';
         flush privileges ;
+
+
+CREATE DATABASE bs;
+
+
+CREATE TABLE new (
+    id VARCHAR(20) NOT NULL primary key,
+    title VARCHAR(20) NOT NULL,
+    summary VARCHAR(50),
+    content VARCHAR(5000),
+    userid VARCHAR(50),
+    username VARCHAR(50)
+);
